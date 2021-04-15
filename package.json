@@ -1,6 +1,6 @@
 {
   "name": "react-native-impressions",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "check if an element is in viewable area or not",
   "main": "index.js",
   "repository": "https://github.com/lokeshdangi/react-native-impressions",

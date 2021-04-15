@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { View, Dimensions } from "react-native";
 
 import { VISIBILITY_DIRECTIONS, WATCH_AT_DEFAULT } from "./constants";
@@ -26,10 +26,10 @@ const isOutOfScreenY = ({ elementHeight, pageY, visiblePercentageY, extraOffsetB
 };
 
 export const Watcher = ({
-  children,
-  watchX,
-  watchY,
-  callback,
+  children = null,
+  watchX = false,
+  watchY = false,
+  callback = null,
   watchInterval = WATCH_AT_DEFAULT,
   visiblePercentageX = 50,
   visiblePercentageY = 50,
@@ -51,8 +51,7 @@ export const Watcher = ({
           if (watchY) {
             const isOutY = isOutOfScreenY({ elementHeight, pageY, visiblePercentageY, extraOffsetBottom, extraOffsetTop });
             if (prevVisibleY.current !== isOutY) {
-              setVisibleY(!isOutY);
-              callback({ direction: VISIBILITY_DIRECTIONS.Y, visible: !isOutY });
+              callback && callback({ direction: VISIBILITY_DIRECTIONS.Y, visible: !isOutY });
             }
             prevVisibleY.current = isOutY;
           }
@@ -60,8 +59,7 @@ export const Watcher = ({
           if (watchX) {
             const isOutX = isOutOfScreenX({ elementWidth, pageX, visiblePercentageX, extraOffsetX, extraOffsetRight, extraOffsetLeft });
             if (prevVisibleX.current !== isOutX) {
-              setVisibleX(!isOutX);
-              callback({ direction: VISIBILITY_DIRECTIONS.X, visible: !isOutX });
+              callback && callback({ direction: VISIBILITY_DIRECTIONS.X, visible: !isOutX });
             }
             prevVisibleX.current = isOutX;
           }

@@ -1,4 +1,4 @@
-import { Watcher } from "./src/Watcher"
+import { VISIBILITY_DIRECTIONS } from "./src/constants";
+import { Watcher } from "./src/Watcher";
 
-
-export {Watcher}
+export { Watcher, VISIBILITY_DIRECTIONS };

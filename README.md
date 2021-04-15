@@ -2,6 +2,12 @@
 
 Track which components are visible to user
 
+### Installation
+
+```
+npm install react-native-impressions
+```
+
 ### Usage
 
 ```

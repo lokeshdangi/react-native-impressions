@@ -1,10 +1,19 @@
 {
   "name": "react-native-impressions",
   "version": "2.0.0",
+  "description": "check if an element is in viewable area or not",
   "main": "index.js",
+  "repository": "https://github.com/lokeshdangi/react-native-impressions",
+  "author": "Lokesh Dangi",
   "license": "MIT",
-  "private": false,
-  "dependencies": {
-    "metro-react-native-babel-preset": "^0.65.2"
-  }
+  "keywords": [
+    "react",
+    "react native",
+    "react-native",
+    "impressions",
+    "in view",
+    "viewable",
+    "view visible",
+    "react-native-impressions"
+  ]
 }

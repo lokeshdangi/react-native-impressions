@@ -33,7 +33,6 @@ export const Watcher = ({
   watchInterval = WATCH_AT_DEFAULT,
   visiblePercentageX = 50,
   visiblePercentageY = 50,
-  extraOffsetX = 0,
   extraOffsetBottom = 0,
   extraOffsetTop = 0,
   extraOffsetRight = 0,
@@ -57,7 +56,7 @@ export const Watcher = ({
           }
 
           if (watchX) {
-            const isOutX = isOutOfScreenX({ elementWidth, pageX, visiblePercentageX, extraOffsetX, extraOffsetRight, extraOffsetLeft });
+            const isOutX = isOutOfScreenX({ elementWidth, pageX, visiblePercentageX, extraOffsetRight, extraOffsetLeft });
             if (prevVisibleX.current !== isOutX) {
               callback && callback({ direction: VISIBILITY_DIRECTIONS.X, visible: !isOutX });
             }

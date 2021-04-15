@@ -1,22 +1,28 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { View, Dimensions } from 'react-native';
+import React, { useEffect, useRef, useState } from "react";
+import { View, Dimensions } from "react-native";
 
-const { width, height } = Dimensions.get('window');
+import { VISIBILITY_DIRECTIONS, WATCH_AT_DEFAULT } from "./constants";
 
-const WATCH_AT_DEFAULT = 500;
-
-const VISIBILITY_DIRECTIONS = { X: 'X', Y: 'Y' };
+const { width, height } = Dimensions.get("window");
 
 const isOutOfScreenX = ({ elementWidth, pageX, visiblePercentageX, extraOffsetRight, extraOffsetLeft }) => {
-  const pageXEnd = pageX + elementWidth;
-  const extra = elementWidth * (visiblePercentageX / 100);
-  return pageXEnd - extra + extraOffsetRight > width || pageX + extra - extraOffsetLeft < 0;
+  const allowedOverflowRight = elementWidth * (visiblePercentageX / 100);
+  const allowedOverflowLeft = elementWidth * ((100 - visiblePercentageX) / 100);
+
+  const isOverflowRight = pageX + allowedOverflowRight > width - extraOffsetRight;
+  const isOverflowLeft = pageX + allowedOverflowLeft < 0 + extraOffsetLeft;
+
+  return isOverflowRight || isOverflowLeft;
 };
 
 const isOutOfScreenY = ({ elementHeight, pageY, visiblePercentageY, extraOffsetBottom, extraOffsetTop }) => {
-  const pageYEnd = pageY + elementHeight;
-  const extra = elementHeight * (visiblePercentageY / 100);
-  return pageYEnd - extra + extraOffsetBottom > height || pageY + extra - extraOffsetTop < 0;
+  const allowedOverflowBottom = elementHeight * (visiblePercentageY / 100);
+  const allowedOverflowTop = elementHeight * ((100 - visiblePercentageY) / 100);
+
+  const isOverflowBottom = pageY + allowedOverflowBottom > height - extraOffsetBottom;
+  const isOverflowTop = pageY + allowedOverflowTop < 0 + extraOffsetTop;
+
+  return isOverflowBottom || isOverflowTop;
 };
 
 export const Watcher = ({
@@ -28,7 +34,7 @@ export const Watcher = ({
   visiblePercentageX = 50,
   visiblePercentageY = 50,
   extraOffsetX = 0,
-  extraOffsetBottom = 80,
+  extraOffsetBottom = 0,
   extraOffsetTop = 0,
   extraOffsetRight = 0,
   extraOffsetLeft = 0,
@@ -36,8 +42,6 @@ export const Watcher = ({
   const viewRef = useRef();
   const prevVisibleX = useRef(null);
   const prevVisibleY = useRef(null);
-  const [visibleX, setVisibleX] = useState(false);
-  const [visibleY, setVisibleY] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -70,9 +74,5 @@ export const Watcher = ({
     };
   });
 
-  return (
-    <View ref={viewRef} style={[{ padding: 10 }, (!visibleX || !visibleY) && { backgroundColor: 'red' }]}>
-      {children}
-    </View>
-  );
+  return <View ref={viewRef}>{children}</View>;
 };

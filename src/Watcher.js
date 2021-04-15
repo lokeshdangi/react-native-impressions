@@ -71,5 +71,9 @@ export const Watcher = ({
     };
   });
 
-  return <View ref={viewRef}>{children}</View>;
+  return (
+    <View collapsable={false} ref={viewRef}>
+      {children}
+    </View>
+  );
 };
